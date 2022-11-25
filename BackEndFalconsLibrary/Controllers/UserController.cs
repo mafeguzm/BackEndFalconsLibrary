@@ -37,6 +37,14 @@ namespace BackEndFalconsLibrary.Controllers
             return user;
         }
 
+        [HttpGet("userByEmail")]
+        public User Get(String email)
+        {
+            var user = context.Falcon_UserList.FirstOrDefault(p => p.Email == email);
+            return user;
+        }
+
+
 
         // Create
 

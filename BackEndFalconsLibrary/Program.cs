@@ -7,6 +7,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//CORS
+builder.Services.AddCors(options =>
+{
+     options.AddDefaultPolicy(
+                       builder =>
+                      {
+                          builder
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader(); 
+                      });
+});
 
 // Add services to the container.
 //var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("SecretKey"));
@@ -52,7 +64,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 
 var app = builder.Build();
-
+app.UseCors();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -62,6 +74,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
